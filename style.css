@@ -89,6 +89,68 @@ p {
     font-size: 12px;
     font-weight: bold;
 }
+/* Recent Images Section */
+.recents-section {
+    margin-top: 30px;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: left;
+}
+
+.recents-section h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+}
+
+#active-tool-indicator {
+    background-color: #dbeafe;
+    color: #1e40af;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+#active-tool-indicator.hidden {
+    display: none;
+}
+
+/* Flexbox shelf for up to 30 elements */
+.recent-shelf-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 45px;
+    padding: 5px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+}
+
+/* Individual recent items */
+.recent-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    object-fit: cover;
+    border: 2px solid transparent;
+    transition: transform 0.1s ease, border-color 0.1s ease;
+}
+
+.recent-item:hover {
+    transform: scale(1.1);
+}
+
+/* Visual cue when a recent image is selected to be stamped */
+.recent-item.selected {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
 
 /* Hide the plus sign once an image is loaded */
 .grid-box.has-image::before {
