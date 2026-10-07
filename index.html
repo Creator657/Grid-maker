@@ -12,10 +12,11 @@
         <h1>16x16 Image Grid</h1>
         <p>Click any slot to upload, or drag & drop an image file directly onto a box.</p>
         
-        <!-- The 256-box grid will generate inside here -->
+               <!-- The 256-box grid -->
         <div id="image-grid" class="grid-16x16"></div>
-    </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+        <div class="recents-section">
+            <h2>Recently Uploaded (Click to select & stamp)</h2>
+            <div id="active-tool-indicator" class="hidden">Selected image active! Click any grid box to apply it.</div>
+            <div id="recent-shelf" class="recent-shelf-grid"></div>
+        </div>
