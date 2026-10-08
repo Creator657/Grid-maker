@@ -9,14 +9,59 @@ body {
     background-color: #f5f7fa;
     color: #333;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
 }
 
+/* Navigation Tabs */
+.nav-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #e2e8f0;
+    color: #1a1a1a;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background-color: #cbd5e1;
+}
+
+.nav-btn.active {
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* Tool Sections */
+.tool-section {
+    display: none;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.tool-section.active {
+    display: block;
+}
+
+/* GRID TOOL STYLES */
 .container {
     width: 100%;
-    max-width: 800px; /* Limits maximum size on wide monitors */
+    max-width: 800px;
     text-align: center;
+    margin: 0 auto;
 }
 
 h1 {
@@ -33,14 +78,13 @@ p {
 /* Fail-Proof 16x16 Grid Layout Container */
 .grid-16x16 {
     display: grid;
-    grid-template-columns: repeat(16, 1fr); /* Forms exactly 16 flexible columns */
-    gap: 2px; /* Small layout gaps between image boxes */
+    grid-template-columns: repeat(16, 1fr);
+    gap: 2px;
     background-color: #ffffff;
     padding: 8px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     
-    /* These three lines guarantee the box stays visible and perfectly square */
     width: 100%; 
     min-width: 320px; 
     aspect-ratio: 1 / 1; 
@@ -59,7 +103,6 @@ p {
     align-items: center;
     justify-content: center;
     
-    /* Forces height to lock onto the column fluid width */
     aspect-ratio: 1 / 1; 
 }
 
@@ -131,7 +174,7 @@ p {
     display: none;
 }
 
-/* Flexbox shelf for up to 30 elements */
+/* Flexbox shelf for up to 100 elements */
 .recent-shelf-grid {
     display: flex;
     flex-wrap: wrap;
@@ -141,6 +184,8 @@ p {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 /* Individual recent items */
@@ -152,6 +197,7 @@ p {
     object-fit: cover;
     border: 2px solid transparent;
     transition: transform 0.1s ease, border-color 0.1s ease;
+    flex-shrink: 0;
 }
 
 .recent-item:hover {
@@ -162,4 +208,192 @@ p {
 .recent-item.selected {
     border-color: #3b82f6;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* PIZZA COLLAGE TOOL STYLES */
+:root {
+    --bg-color: #121214;
+    --card-color: #1e1e24;
+    --accent-color: #6366f1;
+    --text-color: #f3f4f6;
+}
+
+#pizza-tool {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+}
+
+#pizza-tool h1 {
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+#pizza-tool p {
+    color: #9ca3af;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.container-pizza {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .container-pizza {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.controls-panel {
+    background-color: var(--card-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.preview-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.upload-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    transition: opacity 0.2s;
+    border: none;
+}
+
+.upload-btn:hover {
+    opacity: 0.9;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.slider-group label {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent-color);
+}
+
+.image-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.image-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem;
+    border-radius: 8px;
+    gap: 0.75rem;
+}
+
+.image-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.image-item-name {
+    flex: 1;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.order-btns {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 0.35rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.action-btn.delete {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.action-btn.delete:hover {
+    background: rgba(239, 68, 68, 0.4);
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    background-color: #000;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.download-btn {
+    width: 100%;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.download-btn:hover {
+    opacity: 0.9;
+}
+
+.download-btn:disabled {
+    background-color: #4b5563;
+    cursor: not-allowed;
+    opacity: 0.5;
 }
