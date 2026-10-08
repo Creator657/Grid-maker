@@ -3,298 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>16x16 Image Grid Manager</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            text-align: center;
-        }
-
-        h1 {
-            margin-bottom: 5px;
-            color: #1a1a1a;
-        }
-
-        p {
-            margin-bottom: 20px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* FAIL-PROOF GRID LAYOUT WRAPPER */
-        .grid-16x16 {
-            display: grid !important;
-            grid-template-columns: repeat(16, 1fr) !important;
-            gap: 2px !important;
-            background-color: #ffffff;
-            padding: 8px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            width: 100% !important;
-            min-height: 320px;
-            aspect-ratio: 1 / 1 !important;
-        }
-
-        /* FORCED GRID BOX VISIBILITY */
-        .grid-box {
-            position: relative;
-            background-color: #eef2f5 !important;
-            border: 1px dashed #cbd5e1 !important;
-            border-radius: 2px;
-            cursor: pointer;
-            overflow: hidden;
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            aspect-ratio: 1 / 1 !important;
-            width: 100% !important;
-            height: 100% !important;
-        }
-
-        .grid-box.drag-over {
-            background-color: #dbeafe !important;
-            border-color: #3b82f6 !important;
-            transform: scale(1.05);
-            z-index: 10;
-        }
-
-        .grid-box input[type="file"] {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 5;
-        }
-
-        .grid-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
-        }
-
-        .grid-box::before {
-            content: '+';
-            color: #94a3b8;
-            font-size: 10px;
-            font-weight: bold;
-        }
-
-        .grid-box.has-image::before {
-            display: none;
-        }
-
-        /* RECENT IMAGES FOOTER SHELF */
-        .recents-section {
-            margin-top: 30px;
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            text-align: left;
-        }
-
-        .recents-section h2 {
-            font-size: 16px;
-            margin-bottom: 10px;
-            color: #1a1a1a;
-        }
-
-        #active-tool-indicator {
-            background-color: #dbeafe;
-            color: #1e40af;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 13px;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        #active-tool-indicator.hidden {
-            display: none;
-        }
-
-        .recent-shelf-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            min-height: 45px;
-            padding: 5px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-        }
-
-        .recent-item {
-            width: 40px;
-            height: 40px;
-            border-radius: 4px;
-            cursor: pointer;
-            object-fit: cover;
-            border: 2px solid transparent;
-            transition: transform 0.1s ease, border-color 0.1s ease;
-        }
-
-        .recent-item:hover {
-            transform: scale(1.1);
-        }
-
-        .recent-item.selected {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-        }
-    </style>
+    <title>Grid & Pizza Collage Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>16x16 Image Grid</h1>
-        <p>Click any slot to upload, or drag & drop an image file directly onto a box.</p>
-        
-        <!-- Generated boxes live here -->
-        <div id="image-grid" class="grid-16x16"></div>
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="nav-btn active" data-tool="grid">16x16 Grid</button>
+        <button class="nav-btn" data-tool="pizza">Pizza Collage</button>
+    </div>
 
-        <div class="recents-section">
-            <h2>Recently Uploaded (Click to select & stamp)</h2>
-            <div id="active-tool-indicator" class="hidden">Selected image active! Click any grid box to apply it.</div>
-            <div id="recent-shelf" class="recent-shelf-grid"></div>
+    <!-- GRID TOOL SECTION -->
+    <div id="grid-tool" class="tool-section active">
+        <div class="container">
+            <h1>16x16 Image Grid</h1>
+            <p>Click any slot to upload, or drag & drop an image file directly onto a box.</p>
+            
+            <!-- Generated boxes live here -->
+            <div id="image-grid" class="grid-16x16"></div>
+
+            <div class="recents-section">
+                <h2>Recently Uploaded (Click to select & stamp)</h2>
+                <div id="active-tool-indicator" class="hidden">Selected image active! Click any grid box to apply it.</div>
+                <div id="recent-shelf" class="recent-shelf-grid"></div>
+            </div>
+
+            <!-- Download Section -->
+            <div class="download-section">
+                <h3>Download Grid</h3>
+                <div class="download-buttons">
+                    <button id="downloadPNG" class="btn-download btn-download-png">📥 Download as PNG</button>
+                    <button id="downloadGrid" class="btn-download btn-download-grid">💾 Download as .grid</button>
+                    <label class="btn-download btn-download-load">
+                        📂 Load .grid File
+                        <input type="file" id="loadGridFile" accept=".grid" style="display: none;">
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const gridContainer = document.getElementById("image-grid");
-            const recentShelf = document.getElementById("recent-shelf");
-            const activeToolIndicator = document.getElementById("active-tool-indicator");
-            
-            const TOTAL_BOXES = 256; 
-            let recentImages = []; 
-            let selectedRecentSrc = null; 
+    <!-- PIZZA COLLAGE TOOL SECTION -->
+    <div id="pizza-tool" class="tool-section">
+        <h1>Radial Pizza Collage Generator</h1>
+        <p>Upload square images to partition them into perfect circular geometric slices.</p>
 
-            // Create the 256 squares
-            for (let i = 0; i < TOTAL_BOXES; i++) {
-                const box = document.createElement("div");
-                box.classList.add("grid-box");
-                box.dataset.index = i;
+        <div class="container-pizza">
+            <!-- CONTROLS -->
+            <div class="controls-panel">
+                <label class="upload-btn">
+                    📁 Upload Images
+                    <input type="file" id="fileInput" multiple accept="image/*">
+                </label>
 
-                const fileInput = document.createElement("input");
-                fileInput.type = "file";
-                fileInput.accept = "image/*";
+                <div class="slider-group">
+                    <div style="display: flex; justify-content: space-between;">
+                        <label for="rotationSlider">Rotation Angle</label>
+                        <span id="rotationVal">0°</span>
+                    </div>
+                    <input type="range" id="rotationSlider" min="0" max="360" value="0">
+                </div>
 
-                box.appendChild(fileInput);
-                gridContainer.appendChild(box);
+                <div>
+                    <label style="font-size: 0.875rem; font-weight: 500; display: block; margin-bottom: 0.5rem;">Manage & Reorder Slices</label>
+                    <div class="image-list" id="imageList"></div>
+                </div>
 
-                // Clicking behavior (Stamp Tool override)
-                box.addEventListener("click", (e) => {
-                    if (selectedRecentSrc) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        applyImageSrc(selectedRecentSrc, box);
-                    }
-                });
+                <button class="download-btn" id="downloadBtn" disabled>💾 Download Collage</button>
+            </div>
 
-                // Regular File Input Selection
-                fileInput.addEventListener("change", (e) => {
-                    if (e.target.files && e.target.files[0]) {
-                        processFile(e.target.files[0], box);
-                    }
-                });
+            <!-- CANVAS PREVIEW -->
+            <div class="preview-panel">
+                <canvas id="collageCanvas" width="800" height="800"></canvas>
+            </div>
+        </div>
+    </div>
 
-                // Drag and Drop listeners
-                box.addEventListener("dragenter", (e) => { e.preventDefault(); box.classList.add("drag-over"); });
-                box.addEventListener("dragover", (e) => { e.preventDefault(); box.classList.add("drag-over"); });
-                box.addEventListener("dragleave", () => box.classList.remove("drag-over"));
-                box.addEventListener("drop", (e) => {
-                    e.preventDefault();
-                    box.classList.remove("drag-over");
-                    const files = e.dataTransfer.files;
-                    if (files.length > 0 && files[0].type.startsWith("image/")) {
-                        processFile(files[0], box);
-                    }
-                });
-            }
-
-            function processFile(file, targetBox) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const imgSrc = event.target.result;
-                    applyImageSrc(imgSrc, targetBox);
-                    addToRecents(imgSrc);
-                };
-                reader.readAsDataURL(file);
-            }
-
-            function applyImageSrc(src, targetBox) {
-                let img = targetBox.querySelector("img");
-                if (!img) {
-                    img = document.createElement("img");
-                    targetBox.appendChild(img);
-                    targetBox.classList.add("has-image");
-                }
-                img.src = src;
-            }
-
-            function addToRecents(src) {
-                recentImages = recentImages.filter(item => item !== src);
-                recentImages.unshift(src);
-                if (recentImages.length > 30) {
-                    recentImages.pop();
-                }
-                renderRecentShelf();
-            }
-
-            function renderRecentShelf() {
-                recentShelf.innerHTML = "";
-                recentImages.forEach(src => {
-                    const imgEl = document.createElement("img");
-                    imgEl.src = src;
-                    imgEl.classList.add("recent-item");
-                    
-                    if (selectedRecentSrc === src) {
-                        imgEl.classList.add("selected");
-                    }
-
-                    imgEl.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        if (selectedRecentSrc === src) {
-                            selectedRecentSrc = null;
-                            activeToolIndicator.classList.add("hidden");
-                        } else {
-                            selectedRecentSrc = src;
-                            activeToolIndicator.classList.remove("hidden");
-                        }
-                        
-                        document.querySelectorAll(".recent-item").forEach(item => {
-                            item.classList.remove("selected");
-                        });
-                        if (selectedRecentSrc) imgEl.classList.add("selected");
-                    });
-
-                    recentShelf.appendChild(imgEl);
-                });
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
