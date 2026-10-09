@@ -100,6 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.stopPropagation();
                 applyImageSrc(selectedRecentSrc, box);
                 autoSave();
+            } else {
+                // If no recent image selected, trigger file input
+                fileInput.click();
             }
         });
 
