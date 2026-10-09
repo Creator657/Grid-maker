@@ -7,20 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- Navigation Tabs -->
     <div class="nav-tabs">
         <button class="nav-btn active" data-tool="grid">16x16 Grid</button>
         <button class="nav-btn" data-tool="pizza">Pizza Collage</button>
     </div>
 
-    <!-- GRID TOOL SECTION -->
     <div id="grid-tool" class="tool-section active">
         <div class="container">
             <h1>16x16 Image Grid</h1>
             <p>Click any slot to upload, or drag & drop an image file directly onto a box.</p>
-            
-            <!-- Generated boxes live here -->
+
             <div id="image-grid" class="grid-16x16"></div>
 
             <div class="recents-section">
@@ -29,7 +25,6 @@
                 <div id="recent-shelf" class="recent-shelf-grid"></div>
             </div>
 
-            <!-- Download Section -->
             <div class="download-section">
                 <h3>Download Grid</h3>
                 <div class="download-buttons">
@@ -37,20 +32,18 @@
                     <button id="downloadGrid" class="btn-download btn-download-grid">💾 Download as .grid</button>
                     <label class="btn-download btn-download-load">
                         📂 Load .grid File
-                        <input type="file" id="loadGridFile" accept=".grid" style="display: none;">
+                        <input type="file" id="loadGridFile" accept=".grid,application/json">
                     </label>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- PIZZA COLLAGE TOOL SECTION -->
     <div id="pizza-tool" class="tool-section">
         <h1>Radial Pizza Collage Generator</h1>
         <p>Upload square images to partition them into perfect circular geometric slices.</p>
 
         <div class="container-pizza">
-            <!-- CONTROLS -->
             <div class="controls-panel">
                 <label class="upload-btn">
                     📁 Upload Images
@@ -73,12 +66,13 @@
                 <button class="download-btn" id="downloadBtn" disabled>💾 Download Collage</button>
             </div>
 
-            <!-- CANVAS PREVIEW -->
             <div class="preview-panel">
                 <canvas id="collageCanvas" width="800" height="800"></canvas>
             </div>
         </div>
     </div>
+
+    <div id="auto-save-indicator">Saved locally for 1 hour</div>
 
     <script src="script.js"></script>
 </body>
