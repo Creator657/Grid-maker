@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const downloadGridBtn = document.getElementById("downloadGrid");
     const loadGridInput = document.getElementById("loadGridFile");
     const autoSaveIndicator = document.getElementById("auto-save-indicator");
+    const massStampUpload = document.getElementById("massStampUpload");
+    const clearStampsBtn = document.getElementById("clearStampsBtn");
 
     const TOTAL_BOXES = 256;
     const AUTO_SAVE_KEY = "gridmaker-autosave";
@@ -16,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let recentImages = [];
     let selectedRecentSrc = null;
     let draggedBox = null;
+    let draggedRecentIndex = null;
 
     // Create the 256 squares
     for (let i = 0; i < TOTAL_BOXES; i++) {
@@ -173,16 +176,57 @@ document.addEventListener("DOMContentLoaded", () => {
         renderRecentShelf();
     }
 
+    function moveRecentImage(fromIndex, toIndex) {
+        if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0) return;
+        const [moved] = recentImages.splice(fromIndex, 1);
+        recentImages.splice(toIndex, 0, moved);
+        renderRecentShelf();
+    }
+
+    function clearAllRecentImages() {
+        recentImages = [];
+        selectedRecentSrc = null;
+        activeToolIndicator.classList.add("hidden");
+        renderRecentShelf();
+    }
+
     function renderRecentShelf() {
         recentShelf.innerHTML = "";
         recentImages.forEach(src => {
             const imgEl = document.createElement("img");
             imgEl.src = src;
             imgEl.classList.add("recent-item");
+            imgEl.draggable = true;
 
             if (selectedRecentSrc === src) {
                 imgEl.classList.add("selected");
             }
+
+            imgEl.addEventListener("dragstart", (e) => {
+                e.dataTransfer.effectAllowed = "move";
+                draggedRecentIndex = recentImages.indexOf(src);
+                imgEl.classList.add("dragging");
+            });
+
+            imgEl.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "move";
+            });
+
+            imgEl.addEventListener("drop", (e) => {
+                e.preventDefault();
+                const targetIndex = recentImages.indexOf(src);
+                if (draggedRecentIndex !== null && draggedRecentIndex !== targetIndex) {
+                    moveRecentImage(draggedRecentIndex, targetIndex);
+                }
+                draggedRecentIndex = null;
+                document.querySelectorAll(".recent-item").forEach(item => item.classList.remove("dragging"));
+            });
+
+            imgEl.addEventListener("dragend", () => {
+                draggedRecentIndex = null;
+                imgEl.classList.remove("dragging");
+            });
 
             imgEl.addEventListener("click", (e) => {
                 e.stopPropagation();
@@ -202,6 +246,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
             recentShelf.appendChild(imgEl);
         });
+    }
+
+    function handleMassStampUpload(event) {
+        const files = Array.from(event.target.files || []);
+        if (!files.length) return;
+
+        const validFiles = files.filter(file => file.type.startsWith("image/"));
+        if (!validFiles.length) return;
+
+        let loadedCount = 0;
+
+        validFiles.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                const src = loadEvent.target.result;
+                addToRecents(src);
+                loadedCount += 1;
+
+                if (loadedCount === validFiles.length) {
+                    massStampUpload.value = "";
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    if (massStampUpload) {
+        massStampUpload.addEventListener("change", handleMassStampUpload);
+    }
+
+    if (clearStampsBtn) {
+        clearStampsBtn.addEventListener("click", clearAllRecentImages);
     }
 
     // Auto-save functionality

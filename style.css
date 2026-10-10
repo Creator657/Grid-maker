@@ -84,17 +84,16 @@ p {
     padding: 8px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    
-    width: 100%; 
-    min-width: 320px; 
-    aspect-ratio: 1 / 1; 
+    width: 100%;
+    min-width: 320px;
+    aspect-ratio: 1 / 1;
 }
 
 /* Individual Grid Boxes */
 .grid-box {
     position: relative;
-    background-color: #eef2f5; 
-    border: 1px dashed #cbd5e1; 
+    background-color: #eef2f5;
+    border: 1px dashed #cbd5e1;
     border-radius: 2px;
     cursor: pointer;
     overflow: hidden;
@@ -102,8 +101,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    aspect-ratio: 1 / 1; 
+    aspect-ratio: 1 / 1;
 }
 
 /* Delete overlay button on grid boxes */
@@ -196,6 +194,50 @@ p {
     color: #1a1a1a;
 }
 
+.recents-tools {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.stamp-upload-btn,
+.clear-stamps-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.stamp-upload-btn {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.stamp-upload-btn:hover {
+    background-color: #2563eb;
+}
+
+.clear-stamps-btn {
+    background-color: #e2e8f0;
+    color: #1a1a1a;
+}
+
+.clear-stamps-btn:hover {
+    background-color: #cbd5e1;
+}
+
+#massStampUpload {
+    display: none;
+}
+
 #active-tool-indicator {
     background-color: #dbeafe;
     color: #1e40af;
@@ -240,12 +282,18 @@ p {
     cursor: pointer;
     object-fit: cover;
     border: 2px solid transparent;
-    transition: transform 0.1s ease, border-color 0.1s ease;
+    transition: transform 0.1s ease, border-color 0.1s ease, opacity 0.1s ease;
     flex-shrink: 0;
 }
 
 .recent-item:hover {
     transform: scale(1.1);
+}
+
+.recent-item.dragging {
+    opacity: 0.5;
+    border-color: #3b82f6;
+    transform: scale(0.95);
 }
 
 /* Visual cue when a recent image is selected to be stamped */
@@ -463,4 +511,43 @@ canvas {
     background-color: #4b5563;
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+#auto-save-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(15, 23, 42, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+#auto-save-indicator.visible {
+    opacity: 1;
+}
+
+@media (max-width: 640px) {
+    body {
+        padding: 12px;
+    }
+
+    .nav-tabs {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .recents-tools {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .stamp-upload-btn,
+    .clear-stamps-btn {
+        width: 100%;
+    }
 }
