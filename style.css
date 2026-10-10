@@ -107,16 +107,16 @@ p {
 /* Delete overlay button on grid boxes */
 .delete-overlay {
     position: absolute;
-    top: 4px;
-    right: 4px;
-    width: 20px;
-    height: 20px;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
     background-color: rgba(239, 68, 68, 0.9);
     color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 2px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -125,6 +125,7 @@ p {
     align-items: center;
     justify-content: center;
     z-index: 2;
+    line-height: 1;
 }
 
 .grid-box:hover .delete-overlay {
