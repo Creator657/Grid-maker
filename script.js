@@ -360,8 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
         canvas.height = rows * cellSize;
 
         const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         const boxes = Array.from(gridContainer.querySelectorAll(".grid-box"));
 
@@ -598,8 +597,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function downloadCollage() {
         if (uploadedImages.length === 0) return;
         const link = document.createElement('a');
-        link.download = 'pizza_slice_collage.jpg';
-        link.href = canvas.toDataURL('image/jpeg', 0.95);
+        link.download = 'pizza_slice_collage.png';
+        link.href = canvas.toDataURL('image/png');
         link.click();
     }
 
